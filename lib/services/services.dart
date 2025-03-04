@@ -10,8 +10,8 @@ import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone/timezone.dart';
 import 'package:workmanager/workmanager.dart';
 //LocalImports
-import 'package:athan_times/ui/services/core/data.dart';
-import 'package:athan_times/ui/services/core/logic.dart';
+import 'package:athan_times/core/data.dart';
+import 'package:athan_times/core/logic.dart';
 
 class WorkManagerService {
   @pragma('vm:entry-point')

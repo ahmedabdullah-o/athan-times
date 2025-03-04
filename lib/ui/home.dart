@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:prayers_times/prayers_times.dart';
 //LocalImports
-import 'package:athan_times/ui/services/core/data.dart';
-import 'package:athan_times/ui/services/core/logic.dart';
-import 'package:athan_times/ui/services/services.dart';
+import 'package:athan_times/core/data.dart';
+import 'package:athan_times/core/logic.dart';
+import 'package:athan_times/services/services.dart';
 import 'package:athan_times/ui/modules.dart';
 
 class Home extends StatefulWidget {

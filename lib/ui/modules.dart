@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 //LocalImports
-import 'package:athan_times/ui/services/core/data.dart';
+import 'package:athan_times/core/data.dart';
 
 class PrayerCard extends StatelessWidget {
   const PrayerCard(
