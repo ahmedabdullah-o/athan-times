@@ -1,18 +1,19 @@
-import 'package:athan_times/data_class.dart';
+//ExternalPackages
 import 'package:flutter/material.dart';
 import 'package:prayers_times/prayers_times.dart';
-import 'services.dart';
-import 'module.dart';
+//LocalImports
+import 'package:athan_times/ui/services/core/data.dart';
+import 'package:athan_times/ui/services/core/logic.dart';
+import 'package:athan_times/ui/services/services.dart';
+import 'package:athan_times/ui/modules.dart';
 
 class Home extends StatefulWidget {
   final PrayerTimesService prayerTimesService;
   final String localTimeZone;
-  final AthanStream athanStream;
   const Home({
     super.key,
     required this.prayerTimesService,
     required this.localTimeZone,
-    required this.athanStream,
   });
 
   @override
@@ -22,7 +23,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final DateTime _now = DateTime.now();
   late PrayerTimes _prayerTimes;
-  late AthanStream _athanStream;
   late String _currentPrayer;
 
   @override
@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
       _now,
       widget.localTimeZone,
     );
-    _athanStream = widget.athanStream;
     _currentPrayer = _prayerTimes.currentPrayer();
   }
 
@@ -40,19 +39,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final SunnahInsights sunnahInsights =
         SunnahInsights(_prayerTimes, precision: true);
-    _athanStream.stream.listen(
-      (prayer) {
-        printDebug('Its $prayer time');
-        NotificationService.showNotification(
-          id: 0,
-          title: prayer,
-          body: 'It\'s time to pray $prayer',
-        );
-        setState(() {
-          _currentPrayer = prayer;
-        });
-      },
-    );
 
     return Scaffold(
       body: ListView(
@@ -93,10 +79,12 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: IconButton(
         onPressed: () {
-          printDebug('Its $_currentPrayer time');
-          AppNotifications.athanNotification(
-              title: _currentPrayer,
-              body: 'It\'s time to pray $_currentPrayer');
+          Debug.printMsg('Its $_currentPrayer time');
+          CoreNotificationInfo notificationInfo =
+              CoreNotificationInfo(id: 0, title: 'FAB notification');
+          SendNotifications.persistent(
+            notificationInfo,
+          );
         },
         icon: Icon(Icons.mosque),
       ),

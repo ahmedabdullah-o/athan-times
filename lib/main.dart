@@ -1,16 +1,21 @@
+//ExternalPackages
 import 'package:flutter/material.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:workmanager/workmanager.dart';
 import 'dart:async';
-import 'services.dart';
-import 'home.dart';
+
+//LocalImports
+import 'package:athan_times/ui/services/core/logic.dart';
+import 'package:athan_times/ui/services/services.dart';
+import 'package:athan_times/ui/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  tzdata.initializeTimeZones();
   // Service instantiation
   final FileStorageService fileStorageService = FileStorageService();
   final TimezoneService timezoneService = TimezoneService();
   final PrayerTimesService prayerTimesService = PrayerTimesService();
-  final AthanStream athanStream = AthanStream();
 
   // Load saved data
   String fileData = await fileStorageService.readFile();
@@ -18,27 +23,27 @@ Future<void> main() async {
   prayerTimesService.selectedMadhabIndex = int.parse(fileData[1]);
   // Fetch local timezone
   String localTimeZone = await timezoneService.getLocalTimezone();
-  printDebug('Local timezone: $localTimeZone');
+  Debug.printMsg('Local timezone: $localTimeZone');
 
   // Service init
-  NotificationService.initNotifications();
+  await NotificationService.initNotifications();
+  await WorkManagerService().initializeWorkmanager();
+  Workmanager().registerOneOffTask('prayer', 'prayer',
+      existingWorkPolicy: ExistingWorkPolicy.replace);
 
   runApp(MyApp(
     prayerTimesService: prayerTimesService,
     localTimeZone: localTimeZone,
-    athanStream: athanStream,
   ));
 }
 
 class MyApp extends StatelessWidget {
   final PrayerTimesService prayerTimesService;
   final String localTimeZone;
-  final AthanStream athanStream;
   const MyApp({
     super.key,
     required this.prayerTimesService,
     required this.localTimeZone,
-    required this.athanStream,
   });
 
   @override
@@ -66,7 +71,6 @@ class MyApp extends StatelessWidget {
       home: Home(
         prayerTimesService: prayerTimesService,
         localTimeZone: localTimeZone,
-        athanStream: athanStream,
       ),
     );
   }

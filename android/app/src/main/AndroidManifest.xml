@@ -2,6 +2,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
+
         android:label="athan_times"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -22,6 +23,13 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
+            <service 
+                android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+                android:foregroundServiceType="dataSync|remoteMessaging"
+                android:exported="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
