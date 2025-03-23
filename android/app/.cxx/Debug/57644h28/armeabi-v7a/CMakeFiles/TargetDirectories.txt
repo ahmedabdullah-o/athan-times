@@ -1,0 +1,2 @@
+/home/ahmed/Project/Android/test/ahtanTimes/athan_times/android/app/.cxx/Debug/57644h28/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/ahmed/Project/Android/test/ahtanTimes/athan_times/android/app/.cxx/Debug/57644h28/armeabi-v7a/CMakeFiles/rebuild_cache.dir

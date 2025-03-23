@@ -1,0 +1,1 @@
+/home/ahmed/Project/Android/test/ahtanTimes/athan_times/build/app/intermediates/cxx/Debug/57644h28/obj/arm64-v8a
