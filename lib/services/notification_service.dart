@@ -1,5 +1,5 @@
 //ExternalPackages
-import 'package:athan_times/services/global_functions.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:athan_times/services/permission_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,7 +8,18 @@ import 'package:timezone/standalone.dart' as tz;
 import 'package:athan_times/core/data.dart';
 import 'package:athan_times/core/logic.dart';
 
-///
+@pragma('vm:entry-point')
+Future<void> notificationOnTap(NotificationResponse response) async {
+  switch (response.payload) {
+    case null:
+      return;
+    case 'navigateAndroidAppSettings':
+      AppSettings.openAppSettings();
+      break;
+    default:
+      throw Exception('The Invoked Payload Is Not Available');
+  }
+}
 
 class SendNotifications extends NotificationService {
   ///Main SendNotification method
