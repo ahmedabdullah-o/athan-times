@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:athan_times/core/data.dart';
 import 'package:athan_times/core/logic.dart';
 import 'package:athan_times/services/notification_service.dart';
@@ -8,13 +9,13 @@ import 'package:athan_times/services/prayer_times_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:permission_handler/permission_handler.dart' as AppSettings;
+import 'package:permission_handler/permission_handler.dart';
 
 @pragma('vm:entry-point')
 void backgroundOnStart(ServiceInstance service) async {
   service.on("start").listen((event) async {
     int waitingCount = 0;
-    while (await AppSettings.Permission.ignoreBatteryOptimizations.isDenied) {
+    while (await Permission.ignoreBatteryOptimizations.isDenied) {
       if (waitingCount > 40) {
         Debug.printMsg(
           'Background Service have been for Permission: IgnoreBatteryOptimization. Permission has not been granted. Service might not work properly.',
